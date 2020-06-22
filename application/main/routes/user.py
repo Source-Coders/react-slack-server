@@ -6,6 +6,13 @@ from ..services import client_service
 from ...models.User import User, user_schema
 
 
+# No good place to put non-model classes yet
+class UserClient():
+    def __init__(self, user_id, username):
+        self.user_id = user_id
+        self.username = username
+
+
 @main.route("/check-username/", methods=["GET"])
 def check_username():
     """
@@ -31,6 +38,16 @@ def test_get_users():
     users_json = user_schema.dump(users, many=True)
     response = {"users": users_json}
     return response
+
+@main.route("/test-store-user", methods=["POST"])
+def test_store_user():
+    data = request.json
+    username = data["username"]
+    user = User(username)
+    db.session.add(user)
+    db.session.commit()
+    response = {"successful": True}
+    return jsonify(response)
 
 @main.route("/usernames/", methods=["GET"])
 def get_users():
