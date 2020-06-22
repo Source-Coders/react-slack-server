@@ -35,7 +35,11 @@ def check_username():
 @main.route("/test-get-users", methods=["GET"])
 def test_get_users():
     users = User.query.all()
-    users_json = user_schema.dump(users, many=True)
+    user_clients = []
+    for user in users:
+        user_client = UserClient(user.user_id, user.username)
+        user_clients.append(user_client)
+    users_json = json.dumps(user_clients, default=lambda obj: obj.__dict__)
     response = {"users": users_json}
     return response
 
