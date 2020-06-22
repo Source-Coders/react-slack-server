@@ -37,6 +37,13 @@ def on_connect():
 def on_ping_test(message):
     emit("pong-test")
 
+@socketio.on("pong-test")
+def on_pong_test(message):
+    emit("ping-pong-success")
+
+@socketio.on("request-ping")
+def on_request_ping(message):
+    emit("ping-test")
 
 @socketio.on("send-message")
 def on_send_message(clientMessage):
