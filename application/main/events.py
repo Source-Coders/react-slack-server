@@ -33,6 +33,9 @@ def on_connect():
     emit("user-joined-chat", {"username": username},
          broadcast=True, include_self=False)
 
+@socketio.on("ping-test")
+def on_ping_test(message):
+    emit("pong-test")
 
 
 @socketio.on("send-message")
