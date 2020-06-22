@@ -25,6 +25,13 @@ def check_username():
 
 ### DATABASE ROUTES ###
 
+@main.route("/test-get-users", methods=["GET"])
+def test_get_users():
+    users = User.query.all()
+    users_json = user_schema.dump(users, many=True)
+    response = {"users": users_json}
+    return response
+
 @main.route("/usernames/", methods=["GET"])
 def get_users():
     """
